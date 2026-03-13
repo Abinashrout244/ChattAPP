@@ -3,20 +3,52 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DotGrid from "./DotGrid";
 import img from "../assets/images/chat.png";
+import axios from "axios";
+import { BASE_URL } from "../utils/Constant";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { addUser } from "../utils/userSlice";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const [isLogedin, setIsLogedin] = useState(true);
   const [firstName, setFisrtName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [emailId, setEmailId] = useState("");
-  const [password, setPassword] = useState("");
+  const [emailId, setEmailId] = useState("tony.mail@mail.com");
+  const [password, setPassword] = useState("Tony@1234_");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
-  const handleAuth = (e) => {
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Your login/signup logic here
-    navigate("/");
+
+    try {
+      const res = await axios.post(
+        BASE_URL + "/api/auth/login",
+        { emailId, password },
+        {
+          withCredentials: true,
+        },
+      );
+
+      dispatch(addUser(res?.data?.findUser || null));
+      toast.success("Logged in successfully!");
+      navigate("/", { replace: true });
+    } catch (err) {
+      toast.error("Login failed. Please check your credentials.");
+      console.log(err?.response || err);
+    }
+  };
+  const handleSignup = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -50,7 +82,7 @@ export default function LoginPage() {
                 : "Join our community of developers today."}
             </p>
 
-            <form onSubmit={handleAuth} className="space-y-4">
+            <form className="space-y-4">
               {!isLogedin && (
                 <div className="flex gap-4">
                   <label className="flex-1 flex items-center gap-3 bg-[#1e1f22] px-4 py-3 rounded-xl border border-[#3f4147] focus-within:border-[#5865F2] transition-all">
@@ -106,12 +138,21 @@ export default function LoginPage() {
                 </div>
               )}
 
-              <button
-                type="submit"
-                className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-3 rounded-xl font-semibold shadow-lg shadow-[#5865f2]/20 transition-all active:scale-[0.98] mt-2"
-              >
-                {isLogedin ? "Sign In" : "Create Account"}
-              </button>
+              {isLogedin ? (
+                <button
+                  onClick={handleLogin}
+                  className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-3 rounded-xl font-semibold shadow-lg shadow-[#5865f2]/20 transition-all active:scale-[0.98] mt-2"
+                >
+                  Login
+                </button>
+              ) : (
+                <button
+                  onClick={handleSignup}
+                  className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-3 rounded-xl font-semibold shadow-lg shadow-[#5865f2]/20 transition-all active:scale-[0.98] mt-2"
+                >
+                  Create Account
+                </button>
+              )}
             </form>
 
             <p className="text-center text-gray-400 mt-8 text-sm">

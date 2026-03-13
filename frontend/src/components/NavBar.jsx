@@ -1,9 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { LogIn, LogOut, MessageCircle, Settings, User } from "lucide-react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../utils/Constant";
+import { removeUser } from "../utils/userSlice";
+import toast from "react-hot-toast";
 
 const NavBar = () => {
-  const [user, setUser] = useState(true);
+  const { user } = useSelector((state) => state?.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        BASE_URL + "/api/auth/logout",
+        {},
+        { withCredentials: true },
+      );
+    } catch (err) {
+      console.log(err?.response || err);
+    } finally {
+      dispatch(removeUser());
+      toast.success("Logged out.");
+      navigate("/login", { replace: true });
+    }
+  };
+
   return (
     <div className="navbar bg-[#2F3136] shadow-sm px-6 py-3 fixed top-0 left-0 right-0 z-20">
       {/* Left: Logo */}
@@ -29,7 +53,10 @@ const NavBar = () => {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full border-2 border-gray-400">
-              <img alt="Profile" src="https://i.pravatar.cc/40?img=5" />
+              <img
+                alt="Profile"
+                src={user?.photoURL || "https://i.pravatar.cc/40?img=5"}
+              />
             </div>
           </div>
 
@@ -42,41 +69,44 @@ const NavBar = () => {
           >
             <Link to="/settings">
               <li>
-                <a className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
+                <p className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
                   <Settings size={16} />
                   Settings
-                </a>
+                </p>
               </li>
             </Link>
 
-            <Link to="/login">
-              <li>
-                <a className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
-                  <LogIn size={16} />
-                  Login
-                </a>
-              </li>
-            </Link>
+            {!user && (
+              <Link to="/login">
+                <li>
+                  <p className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
+                    <LogIn size={16} />
+                    Login
+                  </p>
+                </li>
+              </Link>
+            )}
 
             {user && (
               <>
                 <Link to="/profile">
                   <li>
-                    <a className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
+                    <p className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
                       <User size={16} />
                       Profile
-                    </a>
+                    </p>
                   </li>
                 </Link>
 
-                <Link>
-                  <li>
-                    <a className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
-                      <LogOut size={16} />
-                      Logout
-                    </a>
-                  </li>
-                </Link>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10"
+                  >
+                    <LogOut size={16} />
+                    Logout
+                  </button>
+                </li>
               </>
             )}
           </ul>
