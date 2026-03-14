@@ -3,8 +3,10 @@ const app = express();
 const connectDB = require("./config/database");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+const http = require("http");
 const userRoute = require("./routes/auth.route");
 const messageRoute = require("./routes/message.route");
+const initialiseSocket = require("./utils/socketio");
 const cors = require("cors");
 app.use(express.json()); //This is a built in middleware which is convert json -> js Object ,Provided by express
 app.use(cookieParser());
@@ -19,10 +21,13 @@ app.use(
 app.use("/api/auth", userRoute);
 app.use("/api/msg", messageRoute);
 
+const server = http.createServer(app);
+initialiseSocket(server);
+
 connectDB()
   .then(() => {
     console.log("Database connection establish perfectly!");
-    app.listen(process.env.PORT || 5000, () => {
+    server.listen(process.env.PORT || 5000, () => {
       console.log("Server Connection establish Perfectly" + process.env.PORT);
     });
   })

@@ -39,12 +39,11 @@ const userSchema = new Schema(
         }
       },
     },
-
     photoURL: {
       type: String,
       validate(value) {
-        if (!validator.isURL(value)) {
-          throw new Error("Provide a Valid URl", +" " + value);
+        if (!validator.isURL(value) && !value.startsWith("data:image")) {
+          throw new Error("Provide a valid Image URL or Base64 image");
         }
       },
       default:
