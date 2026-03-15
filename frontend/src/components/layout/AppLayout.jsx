@@ -3,18 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 
-import LoginPage from "./LoginPage";
 import Body from "./Body";
-import Profile from "./Profile";
-import Home from "./Home";
 
-import Settings from "./Settings";
+import Home from "../../pages/Home";
+import LoginPage from "../../pages/LoginPage";
+import Profile from "../../pages/Profile";
+import Settings from "../../pages/Settings";
 
 import { Toaster } from "react-hot-toast";
-import ProtecedRoute from "../utils/ProtecedRoute";
-import FullPageSpinner from "../utils/FullPageSpinner";
-import { BASE_URL } from "../utils/Constant";
-import { addUser, removeUser, setLoading } from "../utils/userSlice";
+import ProtectedRoute from "../../routes/ProtectedRoute";
+import FullPageSpinner from "../ui/FullPageSpinner";
+import { BASE_URL } from "../../utils/constant";
+import { addUser, removeUser, setLoading } from "../../redux/userSlice";
 
 const AppLayout = () => {
   const dispatch = useDispatch();
@@ -58,18 +58,18 @@ const AppLayout = () => {
           <Route
             index
             element={
-              <ProtecedRoute>
+              <ProtectedRoute>
                 <Home />
-              </ProtecedRoute>
+              </ProtectedRoute>
             }
           />
           <Route path="login" element={<LoginPage />} />
           <Route
             path="profile"
             element={
-              <ProtecedRoute>
+              <ProtectedRoute>
                 <Profile />
-              </ProtecedRoute>
+              </ProtectedRoute>
             }
           />
           <Route path="settings" element={<Settings />} />

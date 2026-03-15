@@ -1,22 +1,47 @@
 import { useEffect, useState } from "react";
-import DotGrid from "./DotGrid"; // Ensure the path is correct
+import DotGrid from "../components/ui/DotGrid"; // Ensure the path is correct
 
 const themes = [
   "light",
   "dark",
   "cupcake",
+  "bumblebee",
+  "emerald",
+  "corporate",
   "synthwave",
+  "retro",
+  "cyberpunk",
+  "valentine",
+  "halloween",
+  "garden",
   "dracula",
   "forest",
+  "aqua",
+  "lofi",
+  "pastel",
+  "fantasy",
+  "wireframe",
+  "black",
   "luxury",
+  "cmyk",
+  "autumn",
+  "business",
+  "acid",
+  "lemonade",
+  "night",
+  "coffee",
+  "winter",
+  "dim",
+  "nord",
+  "sunset",
 ];
 
 export default function Settings() {
-  const [savedTheme, setSavedTheme] = useState("dark");
-  const [previewTheme, setPreviewTheme] = useState("dark");
+  const [savedTheme, setSavedTheme] = useState("black");
+  const [previewTheme, setPreviewTheme] = useState("black");
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("chat-theme") || "dark";
+    const storedTheme = localStorage.getItem("chat-theme") || "black";
     setSavedTheme(storedTheme);
     setPreviewTheme(storedTheme);
     document.documentElement.setAttribute("data-theme", storedTheme);
@@ -38,7 +63,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-62px)] w-full flex items-center justify-center bg-[#1E1F22] overflow-hidden p-4 md:p-8">
+    <div className="relative min-h-[calc(100vh-62px)] w-full flex items-center justify-center bg-base-200 text-base-content overflow-hidden p-4 md:p-8">
       {/* 1. BACKGROUND DOT GRID */}
       <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
         <DotGrid

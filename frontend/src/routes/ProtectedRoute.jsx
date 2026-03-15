@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import FullPageSpinner from "./FullPageSpinner";
+import FullPageSpinner from "../components/ui/FullPageSpinner";
 
-const ProtecedRoute = ({ children }) => {
+const ProtectedRoute = ({ children }) => {
   const { user, loading } = useSelector((state) => state.user);
 
   if (loading)
@@ -14,4 +14,4 @@ const ProtecedRoute = ({ children }) => {
   return children;
 };
 
-export default ProtecedRoute;
+export default ProtectedRoute;

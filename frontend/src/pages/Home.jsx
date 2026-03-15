@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
-import { BASE_URL } from "../utils/Constant";
+import { BASE_URL } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUsers,
@@ -21,13 +21,12 @@ import {
   userOffline,
   increaseUnread,
   clearUnread,
-} from "../utils/chatSlice";
-import { createConnection } from "../utils/Socket";
-import SideBar from "./SideBar";
-import chatWallPaper from "./ChatWallpaper";
-import ChatWallPaper from "./ChatWallpaper";
-import MessageInput from "./MessageInput";
-import ChatArea from "./ChatArea";
+} from "../redux/chatSlice";
+import { createConnection } from "../socket/socket";
+import SideBar from "../components/layout/SideBar";
+import ChatWallPaper from "../components/chat/ChatWallpaper";
+import MessageInput from "../components/chat/MessageInput";
+import ChatArea from "../components/chat/ChatArea";
 
 export default function ChatPage() {
   const [messageInput, setMessageInput] = useState("");
@@ -163,6 +162,7 @@ export default function ChatPage() {
     );
     return userMessages[userMessages.length - 1] || null;
   };
+
   useEffect(() => {
     if (selectedUser?._id && socketRef.current) {
       socketRef.current.emit("joinChat", {
@@ -192,7 +192,7 @@ export default function ChatPage() {
   }, [messages]);
 
   return (
-    <div className="h-[calc(100vh-62px)] flex bg-[#111b21] text-gray-200 overflow-hidden font-sans">
+    <div className="h-[calc(100vh-62px)] flex bg-base-200 text-base-content overflow-hidden font-sans">
       {/* --- SIDEBAR --- */}
       <SideBar
         selectedUser={selectedUser}
@@ -206,15 +206,15 @@ export default function ChatPage() {
 
       {/* --- MAIN CHAT --- */}
       <div
-        className={`${!selectedUser ? "hidden" : "flex"} md:flex flex-1 flex-col bg-[#0b141a]`}
+        className={`${!selectedUser ? "hidden" : "flex"} md:flex flex-1 flex-col bg-base-100`}
       >
         {selectedUser ? (
           <div className="flex flex-col h-full relative">
             {/* Header */}
-            <div className="flex items-center justify-between p-3 bg-[#202c33] h-[60px] z-10 shadow-md">
+            <div className="flex items-center justify-between p-3 bg-base-200 h-[60px] z-10 shadow-md">
               <div className="flex items-center gap-3">
                 <button
-                  className="md:hidden text-[#aebac1]"
+                  className="md:hidden text-base-content/70"
                   onClick={() => {
                     dispatch(setSelectedUser(null));
                     localStorage.removeItem("lastChatUserId");
@@ -228,10 +228,10 @@ export default function ChatPage() {
                   alt=""
                 />
                 <div>
-                  <h2 className="text-[#e9edef] font-medium leading-tight">
+                  <h2 className="text-base-content font-medium leading-tight">
                     {selectedUser.firstName}
                   </h2>
-                  <p className="text-[12px] text-[#8696a0]">
+                  <p className="text-[12px] text-base-content/60">
                     {onlineUsers.includes(selectedUser._id)
                       ? "online"
                       : "offline"}
@@ -263,12 +263,12 @@ export default function ChatPage() {
             />
           </div>
         ) : (
-          <div className="hidden md:flex flex-col flex-1 items-center justify-center bg-[#222e35] border-b-4 border-[#00a884]">
-            <MessageCircle size={100} className="text-[#3b4a54]" />
-            <h1 className="text-[32px] font-light text-[#e9edef] mt-8">
+          <div className="hidden md:flex flex-col flex-1 items-center justify-center bg-base-200 border-b-4 border-primary">
+            <MessageCircle size={100} className="text-base-content/40" />
+            <h1 className="text-[32px] font-light text-base-content mt-8">
               ChatSphere Web
             </h1>
-            <p className="text-[#8696a0] text-sm mt-4 text-center max-w-sm px-6">
+            <p className="text-base-content/60 text-sm mt-4 text-center max-w-sm px-6">
               Send and receive messages in real-time with end-to-end
               connectivity.
             </p>

@@ -15,7 +15,7 @@ const ChatArea = ({ messages, chatBg, user, scrollRef }) => {
             className={`flex ${msg.senderId === user._id ? "justify-end" : "justify-start"}`}
           >
             <div
-              className={`relative px-3 py-1.5 max-w-[85%] md:max-w-[65%] text-[14.2px] shadow-sm rounded-lg ${msg.senderId === user._id ? "bg-[#005c4b] text-[#e9edef] rounded-tr-none" : "bg-[#202c33] text-[#e9edef] rounded-tl-none"}`}
+              className={`relative px-3 py-1.5 max-w-[85%] md:max-w-[65%] text-[14.2px] shadow-sm rounded-lg ${msg.senderId === user._id ? "bg-primary text-primary-content rounded-tr-none" : "bg-base-300 text-base-content rounded-tl-none"}`}
             >
               {msg.text && <p>{msg.text}</p>}
               {msg.image && (
@@ -25,7 +25,7 @@ const ChatArea = ({ messages, chatBg, user, scrollRef }) => {
                   className="mt-2 max-w-full rounded-lg"
                 />
               )}
-              <div className="text-[10px] text-[#8696a0] text-right mt-1 ml-4 inline-block">
+              <div className="text-[10px] text-base-content/60 text-right mt-1 ml-4 inline-block">
                 {new Date(msg.createdAt).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",

@@ -11,14 +11,14 @@ const MessageInput = ({
   sendMessages,
 }) => {
   return (
-    <div className="p-2 bg-[#202c33] relative">
+    <div className="p-2 bg-base-200 relative">
       <AnimatePresence>
         {previewUrl && (
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 20, opacity: 0 }}
-            className="absolute bottom-full left-4 mb-2 p-2 bg-[#2a3942] rounded-lg shadow-xl border border-[#3b4a54] z-20"
+            className="absolute bottom-full left-4 mb-2 p-2 bg-base-300 rounded-lg shadow-xl border border-base-300 z-20"
           >
             <div className="relative">
               <img
@@ -28,7 +28,7 @@ const MessageInput = ({
               />
               <button
                 onClick={clearImage}
-                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+                className="absolute -top-2 -right-2 bg-error text-error-content rounded-full p-1"
               >
                 <X size={14} />
               </button>
@@ -38,9 +38,9 @@ const MessageInput = ({
       </AnimatePresence>
 
       <div className="flex items-center gap-2">
-        <div className="flex-1 bg-[#2a3942] rounded-lg flex items-center px-4 py-1">
+        <div className="flex-1 bg-base-300 rounded-lg flex items-center px-4 py-1">
           <label
-            className={`cursor-pointer mr-3 transition-colors ${imageFile ? "text-[#00a884]" : "text-[#aebac1]"}`}
+            className={`cursor-pointer mr-3 transition-colors ${imageFile ? "text-primary" : "text-base-content/70"}`}
           >
             <Image size={22} />
             <input
@@ -56,13 +56,13 @@ const MessageInput = ({
             onChange={(e) => setMessageInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessages()}
             placeholder="Type a message"
-            className="flex-1 bg-transparent border-none outline-none py-2 text-[#e9edef] placeholder-[#8696a0]"
+            className="flex-1 bg-transparent border-none outline-none py-2 text-base-content placeholder:text-base-content/60"
           />
         </div>
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="bg-[#00a884] p-3 rounded-full text-[#111b21]"
+          className="bg-primary p-3 rounded-full text-primary-content"
           onClick={sendMessages}
         >
           <Send size={20} />

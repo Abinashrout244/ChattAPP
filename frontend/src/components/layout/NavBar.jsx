@@ -3,8 +3,8 @@ import { LogIn, LogOut, MessageCircle, Settings, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { BASE_URL } from "../utils/Constant";
-import { removeUser } from "../utils/userSlice";
+import { BASE_URL } from "../../utils/constant";
+import { removeUser } from "../../redux/userSlice";
 import toast from "react-hot-toast";
 
 const NavBar = () => {
@@ -29,17 +29,17 @@ const NavBar = () => {
   };
 
   return (
-    <div className="navbar bg-[#2F3136] shadow-sm px-6 py-3 fixed top-0 left-0 right-0 z-20">
+    <div className="navbar bg-base-200 text-base-content shadow-sm px-6 py-3 fixed top-0 left-0 right-0 z-20 border-b border-base-300">
       {/* Left: Logo */}
       <Link to="/" className="flex-1 flex items-center gap-3">
         <div className="flex-1 flex items-center gap-3">
           {/* Logo Icon */}
-          <div className="w-10 h-10 bg-[#5865F2] rounded-full flex items-center justify-center">
-            <MessageCircle className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+            <MessageCircle className="w-6 h-6 text-primary-content" />
           </div>
 
           {/* App Name */}
-          <span className="font-logo text-white font-semibold text-xl select-none ">
+          <span className="font-logo text-base-content font-semibold text-xl select-none">
             Chat Sphere
           </span>
         </div>
@@ -52,7 +52,7 @@ const NavBar = () => {
             role="button"
             className="btn btn-ghost btn-circle avatar"
           >
-            <div className="w-10 rounded-full border-2 border-gray-400">
+            <div className="w-10 rounded-full border-2 border-base-300">
               <img
                 alt="Profile"
                 src={user?.photoURL || "https://i.pravatar.cc/40?img=5"}
@@ -62,14 +62,11 @@ const NavBar = () => {
 
           <ul
             tabIndex="-1"
-            className="menu menu-sm dropdown-content 
-  bg-[#36393F] text-gray-200 
-  rounded-lg border border-[#4f545c]
-  z-50 mt-3 w-52 p-2 shadow-md"
+            className="menu menu-sm dropdown-content bg-base-200 text-base-content rounded-lg border border-base-300 z-50 mt-3 w-52 p-2 shadow-md"
           >
             <Link to="/settings">
               <li>
-                <p className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
+                <p className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300/60">
                   <Settings size={16} />
                   Settings
                 </p>
@@ -79,7 +76,7 @@ const NavBar = () => {
             {!user && (
               <Link to="/login">
                 <li>
-                  <p className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
+                  <p className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300/60">
                     <LogIn size={16} />
                     Login
                   </p>
@@ -91,7 +88,7 @@ const NavBar = () => {
               <>
                 <Link to="/profile">
                   <li>
-                    <p className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10">
+                    <p className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300/60">
                       <User size={16} />
                       Profile
                     </p>
@@ -101,7 +98,7 @@ const NavBar = () => {
                 <li>
                   <button
                     onClick={handleLogout}
-                    className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-md hover:bg-white/10"
+                    className="w-full text-left flex items-center gap-2 px-3 py-2 rounded-md hover:bg-base-300/60"
                   >
                     <LogOut size={16} />
                     Logout
