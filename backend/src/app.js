@@ -8,7 +8,8 @@ const userRoute = require("./routes/auth.route");
 const messageRoute = require("./routes/message.route");
 const initialiseSocket = require("./utils/socketio");
 const cors = require("cors");
-app.use(express.json()); //This is a built in middleware which is convert json -> js Object ,Provided by express
+app.use(express.json({ limit: "5mb" })); // allow base64 image payloads
+app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use(cookieParser());
 
 app.use(
