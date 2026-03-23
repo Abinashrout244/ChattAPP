@@ -64,7 +64,7 @@ export default function LoginPage() {
       navigate("/");
     } catch (err) {
       console.log(err?.response || err);
-      toast.error("Login failed. Please check your credentials.");
+      toast.error("UserRegister Failed. Please try again.");
     }
   };
 

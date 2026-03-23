@@ -55,7 +55,7 @@ const NavBar = () => {
             <div className="w-10 rounded-full border-2 border-base-300">
               <img
                 alt="Profile"
-                src={user?.photoURL || "https://i.pravatar.cc/40?img=5"}
+                src={user?.photoURL || "https://i.pinimg.com/736x/6e/59/95/6e599501252c23bcf02658617b29c894.jpg"}
               />
             </div>
           </div>
