@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import DotGrid from "../components/ui/DotGrid";
 import img from "../assets/images/chat.png";
 import axios from "axios";
-import { BASE_URL } from "../utils/constant";
+const BASE_URL = import.meta.env.VITE_API_URL;
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addUser } from "../redux/userSlice";

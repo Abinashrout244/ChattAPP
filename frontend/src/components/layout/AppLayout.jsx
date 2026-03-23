@@ -13,7 +13,7 @@ import Settings from "../../pages/Settings";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "../../routes/ProtectedRoute";
 import FullPageSpinner from "../ui/FullPageSpinner";
-import { BASE_URL } from "../../utils/constant";
+const BASE_URL = import.meta.env.VITE_API_URL;
 import { addUser, removeUser, setLoading } from "../../redux/userSlice";
 
 const AppLayout = () => {

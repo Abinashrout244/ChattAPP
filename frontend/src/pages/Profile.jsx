@@ -3,7 +3,7 @@ import { useState } from "react";
 import DotGrid from "../components/ui/DotGrid";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { BASE_URL } from "../utils/constant";
+const BASE_URL = import.meta.env.VITE_API_URL;
 import toast from "react-hot-toast";
 import { addUser } from "../redux/userSlice";
 

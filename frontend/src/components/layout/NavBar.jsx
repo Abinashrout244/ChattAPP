@@ -3,7 +3,7 @@ import { LogIn, LogOut, MessageCircle, Settings, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { BASE_URL } from "../../utils/constant";
+const BASE_URL = import.meta.env.VITE_API_URL;
 import { removeUser } from "../../redux/userSlice";
 import toast from "react-hot-toast";
 

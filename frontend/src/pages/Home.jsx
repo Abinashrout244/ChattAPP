@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
-import { BASE_URL } from "../utils/constant";
+const BASE_URL = import.meta.env.VITE_API_URL;
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUsers,
