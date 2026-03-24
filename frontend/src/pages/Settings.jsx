@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DotGrid from "../components/ui/DotGrid"; // Ensure the path is correct
+import toast from "react-hot-toast";
 
 const themes = [
   "light",
@@ -55,6 +56,7 @@ export default function Settings() {
   const saveTheme = () => {
     setSavedTheme(previewTheme);
     localStorage.setItem("chat-theme", previewTheme);
+    toast.success("Theme Changed Sucessfully");
   };
 
   const cancelChange = () => {

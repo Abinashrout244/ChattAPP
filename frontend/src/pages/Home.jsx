@@ -33,6 +33,7 @@ export default function ChatPage() {
   const [imageFile, setImageFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [chatBg, setChatBg] = useState("bg-[#0B141A]");
+  const [showUserInfo, setShowUserInfo] = useState(false);
 
   const dispatch = useDispatch();
   const socketRef = useRef(null);
@@ -222,11 +223,12 @@ export default function ChatPage() {
                 >
                   <ArrowLeft size={24} />
                 </button>
-                <img
-                  src={selectedUser.photoURL}
-                  className="w-10 h-10 rounded-full"
-                  alt=""
-                />
+              <img
+  src={selectedUser.photoURL}
+  className="w-10 h-10 rounded-full cursor-pointer"
+  alt=""
+  onClick={() => setShowUserInfo(true)}
+/>
                 <div>
                   <h2 className="text-base-content font-medium leading-tight">
                     {selectedUser.firstName}
@@ -242,6 +244,97 @@ export default function ChatPage() {
               {/* Wallpaper Menu */}
               <ChatWallPaper setChatBg={setChatBg} chatBg={chatBg} />
             </div>
+  <AnimatePresence>
+  {showUserInfo && selectedUser && (
+   <motion.div
+  initial={{ x: "100%" }}
+  animate={{ x: 0 }}
+  exit={{ x: "100%" }}
+  transition={{ duration: 0.25 }}
+  className="
+    fixed md:absolute top-0 right-0 
+    h-full w-full md:w-[360px] 
+    bg-[#0B141A] text-white
+    z-[999] shadow-2xl
+    flex flex-col border-l border-white/10
+  "
+>
+  {/* HEADER */}
+  <div className="flex items-center gap-3 p-4 border-b border-white/10 bg-[#202C33]">
+    
+    {/* Mobile Back Button */}
+    <button
+      className="md:hidden text-white/80 hover:text-white"
+      onClick={() => setShowUserInfo(false)}
+    >
+      <ArrowLeft size={22} />
+    </button>
+
+    <h2 className="font-semibold text-lg tracking-wide">
+      User Info
+    </h2>
+
+    {/* Desktop Close */}
+    <button
+      className="ml-auto hidden md:block text-white/80 hover:text-red-400 transition"
+      onClick={() => setShowUserInfo(false)}
+    >
+      <X size={20} />
+    </button>
+  </div>
+
+  {/* CONTENT */}
+  <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center">
+    
+    {/* PROFILE IMAGE */}
+    <img
+      src={selectedUser.photoURL}
+      className="w-28 h-28 rounded-full mb-4 border-4 border-[#202C33] shadow-lg"
+      alt=""
+    />
+
+    {/* NAME */}
+    <h2 className="text-xl font-semibold text-center">
+      <span>{selectedUser.firstName}</span>{" "}
+      <span>{selectedUser?.lastName}</span>
+    </h2>
+
+    {/* STATUS */}
+    <p className="text-sm mt-1 font-medium">
+      {onlineUsers.includes(selectedUser._id) ? (
+        <span className="text-green-400">● Online</span>
+      ) : (
+        <span className="text-gray-400">● Offline</span>
+      )}
+    </p>
+
+    {/* BIO */}
+    <p className="mt-4 text-sm text-center text-white/70 leading-relaxed px-2">
+      {selectedUser.bio || "No bio available"}
+    </p>
+
+    {/* INFO SECTION */}
+    <div className="mt-6 w-full space-y-4 text-sm">
+      
+      <div className="flex justify-between items-center bg-[#202C33] px-4 py-3 rounded-lg">
+        <span className="text-white/60">Gender</span>
+        <span className="font-medium">
+          {selectedUser.gender || "Not specified"}
+        </span>
+      </div>
+
+      <div className="flex justify-between items-center bg-[#202C33] px-4 py-3 rounded-lg">
+        <span className="text-white/60">User Gmail</span>
+        <span className="truncate max-w-[160px] font-medium">
+          {selectedUser?.emailId}
+        </span>
+      </div>
+
+    </div>
+  </div>
+</motion.div>
+  )}
+</AnimatePresence>
 
             {/* Message Area */}
             <ChatArea
